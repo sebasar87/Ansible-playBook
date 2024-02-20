@@ -1,0 +1,14 @@
+---
+- hosts: pcnodo1
+  become: true
+  user: ansible
+  tasks: 
+  - name: "tarea capiar archivo '/var/estoEsUnArchivo'"
+    copy:
+      src: /var/estoEsUnArchivo
+      dest: /tmp/
+      remote_src: yes
+      owner: ansible
+      group: ansible
+      mode: '0777'   
+...   

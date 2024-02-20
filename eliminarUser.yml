@@ -1,0 +1,11 @@
+---
+- hosts: pcnodo1
+  become: true
+  user: ansible
+  tasks: 
+  - name: Remove the user 'james'
+    user:
+      name: james
+      state: absent
+      remove: no
+...

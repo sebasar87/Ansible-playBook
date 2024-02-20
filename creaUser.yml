@@ -1,0 +1,26 @@
+---
+- hosts: pcnodo1
+  become: true
+  user: ansible
+  tasks: 
+  - name: Add the user 'james' with a bash shell, appending the group 'admins' and 'developers' to the user's groups
+    user:
+      name: james
+      comment: usuario de pruebas
+      shell: /bin/bash
+      home: /home/james
+      groups: ansible,www-data
+      append: no
+      update_password: on_create
+      #password: "{{'aqwsxz123' | password_hash('sha512')}}"
+      #expires: -1
+  - name: Set temporary password for 'james'
+#Para utilizar este modulo en cada servidor debe estar instalado el modulo pexpect se instala con pip o pip3 
+    expect:
+      command: passwd james
+      responses:
+        'New password:': 'aqwsxz123'
+        'Retype new password:': 'aqwsxz123'
+  - name: Require 'james' to change password on first login
+    shell: chage -d 0 james
+...
